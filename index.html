@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel SMM - Enviar Orden</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="toggleTheme" class="theme-toggle">🌓 Modo Oscuro</button>
+
+  <div class="container">
+    <h1><i class="fa-solid fa-bolt"></i> Enviar Orden</h1>
+    <form id="orderForm" autocomplete="off">
+
+      <div class="form-group">
+        <label for="service"><i class="fa-solid fa-list"></i> Tipo de servicio:</label>
+        <select id="service" name="service">
+          <option value="3707" selected>Seguidores Instagram</option>
+          <option value="157">Likes Instagram</option>
+          <option value="169">Vistas Instagram</option>
+          <option value="2850">Seguidores TikTok</option>
+          <option value="5120">Likes TikTok</option>
+          <option value="2771">Vistas TikTok</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="link"><i class="fa-brands fa-instagram"></i> Enlace:</label>
+        <input type="url" id="link" name="link" placeholder="Ej: https://www.instagram.com/usuario" required autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="quantity"><i class="fa-solid fa-hashtag"></i> Cantidad:</label>
+        <input type="number" id="quantity" name="quantity" placeholder="Ej: 100" min="1" required autocomplete="off">
+      </div>
+
+      <button type="submit" id="submitButton">
+        <span id="btnText">Enviar Orden</span>
+        <i id="spinner" class="fa-solid fa-spinner fa-spin" style="display: none; margin-left: 8px;"></i>
+      </button>
+    </form>
+
+    <div id="responseMessage" class="message-area" style="display: none;"></div>
+    <div id="orderStatus" class="status-area" style="display: none;"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
