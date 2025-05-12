@@ -1,3 +1,5 @@
+// script.js COMPLETO con toast de pedido y saldo en pantalla (versión segura)
+
 document.addEventListener('DOMContentLoaded', () => {
   const orderForm = document.getElementById('orderForm');
   const serviceSelect = document.getElementById('service');
@@ -29,17 +31,23 @@ document.addEventListener('DOMContentLoaded', () => {
         body: new URLSearchParams({ key: API_KEY, action: 'balance' }),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
-      const balanceData = await balanceResponse.json();
+
+      const balanceText = await balanceResponse.text();
+      console.log('Respuesta balance:', balanceText);
+
+      const balanceData = balanceText.includes('{') ? JSON.parse(balanceText) : {};
       const balance = balanceData.balance || '0.00';
+
       balanceDisplay.textContent = `Saldo actual: $${balance}`;
       return balance;
-    } catch {
+    } catch (e) {
       balanceDisplay.textContent = 'Saldo actual: error';
+      console.error('Error al consultar el saldo:', e);
       return '0.00';
     }
   }
 
-  updateBalance(); // Mostrar saldo al cargar
+  updateBalance();
 
   orderForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -150,7 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     responseMessage.style.display = 'block';
   }
 
-  // Toast Notification
   function showToast(details) {
     const toast = document.createElement("div");
     toast.className = "toast";
@@ -170,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   }
 
-  // Modo oscuro
   function applyTheme(theme) {
     document.body.classList.toggle('dark', theme === 'dark');
     document.getElementById('toggleTheme').textContent = theme === 'dark' ? '🌞 Modo Claro' : '🌓 Modo Oscuro';
