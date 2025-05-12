@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // silencioso
       }
   
-      showSuccess(`✅ Orden enviada correctamente${orderId ? ` (ID: ${orderId})` : ''}`);
+    showSuccess(`✅ Orden enviada correctamente${orderId ? ` (ID: ${orderId})` : ''} - Cantidad: ${finalQuantity}`);
   
       if (orderId) {
         fetchOrderStatus(orderId);
