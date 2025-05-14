@@ -1,3 +1,5 @@
+// script.js LIMPIO (sin balance ni código innecesario)
+
 document.addEventListener('DOMContentLoaded', () => {
   const orderForm = document.getElementById('orderForm');
   const serviceSelect = document.getElementById('service');
@@ -41,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quantity = parseInt(quantityStr);
     if (isNaN(quantity) || quantity <= 0) return;
 
-    const finalQuantity = Math.ceil(quantity * 1.10);
+    const finalQuantity = serviceId === '3707' ? Math.ceil(quantity * 1.10) : quantity;
 
     const params = new URLSearchParams();
     params.append('key', API_KEY);
