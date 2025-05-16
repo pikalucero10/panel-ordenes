@@ -1,5 +1,3 @@
-// script.js LIMPIO (sin balance ni código innecesario)
-
 document.addEventListener('DOMContentLoaded', () => {
   const orderForm = document.getElementById('orderForm');
   const serviceSelect = document.getElementById('service');
@@ -12,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const spinner = document.getElementById('spinner');
 
   const API_URL = 'https://smmcoder.com/api/v2';
-  const API_KEY = '89fa5c12e497c6031bf995fb4095070e';
+  const API_KEY = 'TU_API_KEY'; // Reemplazá por tu API Key real
 
   const servicios = {
     '3707': 'Seguidores Instagram',
@@ -23,37 +21,37 @@ document.addEventListener('DOMContentLoaded', () => {
     '2771': 'Vistas TikTok'
   };
 
+  const notificacion = new Howl({
+    src: ['mpr/notificacion.mp3'],
+    volume: 0.8
+  });
+
   orderForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-
-    responseMessage.style.display = 'none';
-    orderStatus.style.display = 'none';
-    responseMessage.className = 'message-area';
-    responseMessage.textContent = '';
+    responseMessage.classList.add('d-none');
+    orderStatus.classList.add('d-none');
 
     submitButton.disabled = true;
     btnText.textContent = 'Enviando...';
-    spinner.style.display = 'inline-block';
+    spinner.classList.remove('d-none');
 
     const serviceId = serviceSelect.value;
     const link = linkInput.value.trim();
-    const quantityStr = quantityInput.value.trim();
+    const quantity = parseInt(quantityInput.value.trim());
 
-    if (!link || !quantityStr) return;
-    const quantity = parseInt(quantityStr);
-    if (isNaN(quantity) || quantity <= 0) return;
+    if (!link || !quantity || quantity <= 0) return;
 
     const finalQuantity = serviceId === '3707' ? Math.ceil(quantity * 1.10) : quantity;
 
-    const params = new URLSearchParams();
-    params.append('key', API_KEY);
-    params.append('action', 'add');
-    params.append('service', serviceId);
-    params.append('link', link);
-    params.append('quantity', finalQuantity.toString());
+    const params = new URLSearchParams({
+      key: API_KEY,
+      action: 'add',
+      service: serviceId,
+      link,
+      quantity: finalQuantity
+    });
 
     let orderId = null;
-    let charge = '0.00';
 
     try {
       const response = await fetch(API_URL, {
@@ -63,109 +61,41 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const text = await response.text();
+      const json = JSON.parse(text);
 
-      try {
-        const json = JSON.parse(text);
-        orderId = json.order;
-        charge = json.charge || '0.00';
-      } catch {
-        const match = text.match(/"order"\s*:\s*(\d+)/);
-        if (match) orderId = match[1];
-      }
-
+      orderId = json.order;
+      showSuccess(`✅ Orden enviada correctamente (ID: ${orderId}) - Cantidad: ${finalQuantity}`);
+      showToast({ id: orderId, service: servicios[serviceId], link, quantity: finalQuantity });
+      notificacion.play();
     } catch (err) {
-      // silencioso
-    }
-
-    showSuccess(`✅ Orden enviada correctamente${orderId ? ` (ID: ${orderId})` : ''} - Cantidad: ${finalQuantity}`);
-
-    if (orderId) {
-      fetchOrderStatus(orderId);
-      showToast({
-        id: orderId,
-        service: servicios[serviceId] || 'Servicio desconocido',
-        link,
-        quantity: finalQuantity,
-        charge
-      });
+      showSuccess('✅ Orden enviada correctamente - Cantidad: ' + finalQuantity);
+      notificacion.play();
     }
 
     submitButton.disabled = false;
     btnText.textContent = 'Enviar Orden';
-    spinner.style.display = 'none';
+    spinner.classList.add('d-none');
   });
-
-  async function fetchOrderStatus(orderId) {
-    const params = new URLSearchParams();
-    params.append('key', API_KEY);
-    params.append('action', 'status');
-    params.append('order', orderId);
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        body: params,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      });
-
-      const data = await response.json();
-      const html = `
-        <strong>📦 Estado actual:</strong><br>
-        <b>ID:</b> ${orderId}<br>
-        <b>Estado:</b> ${data.status}<br>
-        <b>Inicio:</b> ${data.start_count}<br>
-        <b>Restantes:</b> ${data.remains}<br>
-        <b>Costo:</b> ${data.charge} ${data.currency}
-      `;
-      orderStatus.innerHTML = html;
-      orderStatus.style.display = 'block';
-    } catch {}
-  }
 
   function showSuccess(message) {
     responseMessage.textContent = message;
-    responseMessage.className = 'message-area success';
-    responseMessage.style.display = 'block';
+    responseMessage.classList.remove('d-none');
   }
 
-  function showToast(details) {
-    const toast = document.createElement("div");
-    toast.className = "toast";
+  function showToast({ id, service, link, quantity }) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
     toast.innerHTML = `
       <strong>✅ Pedido recibido</strong><br>
-      ID: ${details.id}<br>
-      Servicio: ${details.service}<br>
-      Enlace: ${details.link}<br>
-      Cantidad: ${details.quantity}<br>
-      Cargo: $${details.charge}
+      ID: ${id}<br>
+      Servicio: ${service}<br>
+      Enlace: ${link}<br>
+      Cantidad: ${quantity}
     `;
     document.body.appendChild(toast);
     setTimeout(() => {
-      toast.classList.add("hide");
+      toast.classList.add('hide');
       setTimeout(() => toast.remove(), 1000);
-    }, 5000);
+    }, 4000);
   }
-
-  function applyTheme(theme) {
-    document.body.classList.toggle('dark', theme === 'dark');
-    document.getElementById('toggleTheme').textContent = theme === 'dark' ? '🌞 Modo Claro' : '🌓 Modo Oscuro';
-    localStorage.setItem('theme', theme);
-  }
-
-  function toggleTheme() {
-    const current = document.body.classList.contains('dark') ? 'dark' : 'light';
-    applyTheme(current === 'dark' ? 'light' : 'dark');
-  }
-
-  document.getElementById('toggleTheme').addEventListener('click', toggleTheme);
-
-  (function () {
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      applyTheme(saved);
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      applyTheme(prefersDark ? 'dark' : 'light');
-    }
-  })();
 });

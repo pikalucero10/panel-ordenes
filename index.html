@@ -1,54 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Panel SMM - Enviar Orden</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
 </head>
-<body>
-  <div id="panelBalance" class="panel-balance">Saldo actual: $0.00</div>
-  <button id="toggleTheme" class="theme-toggle">🌓 Modo Oscuro</button>
+<body class="bg-light d-flex justify-content-center align-items-center min-vh-100">
 
   <div class="container">
-    <h1><i class="fa-solid fa-bolt"></i> Enviar Orden</h1>
-    <form id="orderForm" autocomplete="off">
+    <div class="row justify-content-center">
+      <div class="col-md-7 col-lg-6">
+        <div class="card shadow-lg p-5 rounded-4">
+          <h1 class="text-center mb-4 fw-bold">Enviar Orden</h1>
 
-      <div class="form-group">
-        <label for="service"><i class="fa-solid fa-list"></i> Tipo de servicio:</label>
-        <select id="service" name="service">
-          <option value="3707" selected>Seguidores Instagram</option>
-          <option value="157">Likes Instagram</option>
-          <option value="169">Vistas Instagram</option>
-          <option value="2850">Seguidores TikTok</option>
-          <option value="5120">Likes TikTok</option>
-          <option value="2771">Vistas TikTok</option>
-        </select>
+          <form id="orderForm">
+            <div class="mb-3">
+              <label for="service" class="form-label">Servicio</label>
+              <select id="service" class="form-select" required>
+                <option value="3707" selected>Seguidores Instagram</option>
+                <option value="157">Likes Instagram</option>
+                <option value="169">Vistas Instagram</option>
+                <option value="2850">Seguidores TikTok</option>
+                <option value="5120">Likes TikTok</option>
+                <option value="2771">Vistas TikTok</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="link" class="form-label">Enlace</label>
+              <input type="url" id="link" class="form-control" placeholder="https://www.instagram.com/usuario" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="quantity" class="form-label">Cantidad</label>
+              <input type="number" id="quantity" class="form-control" placeholder="100" min="1" required>
+            </div>
+
+            <button type="submit" id="submitButton" class="btn btn-primary w-100 fw-bold">
+              <span id="btnText">Enviar Orden</span>
+              <span id="spinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status" aria-hidden="true"></span>
+            </button>
+          </form>
+
+          <div id="responseMessage" class="alert alert-success mt-4 d-none" role="alert"></div>
+          <div id="orderStatus" class="alert alert-info mt-3 d-none status-area"></div>
+        </div>
       </div>
-
-      <div class="form-group">
-        <label for="link"><i class="fa-brands fa-instagram"></i> Enlace:</label>
-        <input type="url" id="link" name="link" placeholder="Ej: https://www.instagram.com/usuario" required autocomplete="off">
-      </div>
-
-      <div class="form-group">
-        <label for="quantity"><i class="fa-solid fa-hashtag"></i> Cantidad:</label>
-        <input type="number" id="quantity" name="quantity" placeholder="Ej: 100" min="1" required autocomplete="off">
-      </div>
-
-      <button type="submit" id="submitButton">
-        <span id="btnText">Enviar Orden</span>
-        <i id="spinner" class="fa-solid fa-spinner fa-spin" style="display: none; margin-left: 8px;"></i>
-      </button>
-    </form>
-
-    <div id="responseMessage" class="message-area" style="display: none;"></div>
-    <div id="orderStatus" class="status-area" style="display: none;"></div>
+    </div>
   </div>
 
+  <!-- Howler.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- App JS -->
   <script src="script.js"></script>
 </body>
 </html>
