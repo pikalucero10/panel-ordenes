@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const spinner = document.getElementById('spinner');
 
   const API_URL = 'https://smmcoder.com/api/v2';
-  const API_KEY = 'TU_API_KEY'; // Reemplazá por tu API Key real
+  const API_KEY = '89fa5c12e497c6031bf995fb4095070e'; // Reemplazá por tu API Key real
 
   const servicios = {
     '3707': 'Seguidores Instagram',
