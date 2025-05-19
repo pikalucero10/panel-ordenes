@@ -25,7 +25,7 @@ body {
   transform: scale(1.01);
 }
 
-h1 {
+h1, h2 {
   font-size: 2rem;
   font-weight: 700;
   color: #1e3a8a;
@@ -50,7 +50,8 @@ h1 {
   box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.2);
 }
 
-button#submitButton {
+button#submitButton,
+button#comboBtn {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   border: none;
   border-radius: 0.75rem;
@@ -58,16 +59,21 @@ button#submitButton {
   font-size: 1.1rem;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-button#submitButton:hover {
+button#submitButton:hover,
+button#comboBtn:hover {
   background: #1d6fa5;
   transform: scale(1.02);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
 }
 
 #responseMessage,
-#orderStatus {
+#orderStatus,
+#comboMessage {
   border-radius: 0.75rem;
   font-weight: 500;
   font-size: 0.95rem;
@@ -106,5 +112,11 @@ button#submitButton:hover {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .card {
+    margin-bottom: 1.5rem;
   }
 }

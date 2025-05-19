@@ -9,14 +9,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnText = document.getElementById('btnText');
   const spinner = document.getElementById('spinner');
 
+  const comboForm = document.getElementById('comboForm');
+  const linkSeg = document.getElementById('linkSeg');
+  const cantSeg = document.getElementById('cantSeg');
+  const linkLike = document.getElementById('linkLike');
+  const cantLike = document.getElementById('cantLike');
+  const comboMessage = document.getElementById('comboMessage');
+  const comboBtn = document.getElementById('comboBtn');
+  const comboSpinner = document.getElementById('comboSpinner');
+
   const API_URL = 'https://smmcoder.com/api/v2';
   const API_KEY = '89fa5c12e497c6031bf995fb4095070e';
 
   const servicios = {
     '3707': 'Seguidores Instagram',
     '157': 'Likes Instagram',
-    '169': 'Vistas Instagram',
-    '2500': 'Seguidores TikTok', // actualizado
+    '2500': 'Seguidores TikTok',
     '5120': 'Likes TikTok',
     '2771': 'Vistas TikTok'
   };
@@ -75,6 +83,58 @@ document.addEventListener('DOMContentLoaded', () => {
     submitButton.disabled = false;
     btnText.textContent = 'Enviar Orden';
     spinner.classList.add('d-none');
+  });
+
+  comboForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    comboMessage.classList.add('d-none');
+
+    comboBtn.disabled = true;
+    comboSpinner.classList.remove('d-none');
+
+    const ordenes = [
+      { id: '3707', link: linkSeg.value.trim(), cantidad: Math.ceil(parseInt(cantSeg.value) * 1.10) },
+      { id: '157', link: linkLike.value.trim(), cantidad: parseInt(cantLike.value) }
+    ];
+
+    const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+    const enviarOrdenSecuencial = async (orden, index) => {
+      const params = new URLSearchParams({
+        key: API_KEY,
+        action: 'add',
+        service: orden.id,
+        link: orden.link,
+        quantity: orden.cantidad
+      });
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          body: params,
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+        const data = await response.json();
+        showToast({ id: data.order, service: servicios[orden.id], link: orden.link, quantity: orden.cantidad });
+      } catch (err) {
+        console.log('Error al enviar orden:', err);
+      }
+
+      if (index < ordenes.length - 1) await delay(5000);
+    };
+
+    for (let i = 0; i < ordenes.length; i++) {
+      const orden = ordenes[i];
+      if (!orden.link || !orden.cantidad || orden.cantidad <= 0) continue;
+      await enviarOrdenSecuencial(orden, i);
+    }
+
+    comboMessage.textContent = '✅ Combo enviado correctamente';
+    comboMessage.classList.remove('d-none');
+    notificacion.play();
+
+    comboBtn.disabled = false;
+    comboSpinner.classList.add('d-none');
   });
 
   function showSuccess(message) {
