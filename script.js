@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const spinner = document.getElementById('spinner');
 
   const API_URL = 'https://smmcoder.com/api/v2';
-  const API_KEY = '89fa5c12e497c6031bf995fb4095070e'; // Reemplazá por tu API Key real
+  const API_KEY = '89fa5c12e497c6031bf995fb4095070e';
 
   const servicios = {
     '3707': 'Seguidores Instagram',
     '157': 'Likes Instagram',
     '169': 'Vistas Instagram',
-    '2850': 'Seguidores TikTok',
+    '2500': 'Seguidores TikTok', // actualizado
     '5120': 'Likes TikTok',
     '2771': 'Vistas TikTok'
   };
