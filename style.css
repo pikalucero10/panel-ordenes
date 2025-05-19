@@ -1,6 +1,6 @@
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #f0f4f8, #dceefb);
+  background: linear-gradient(145deg, #e0f7fa, #f1f8ff);
 }
 
 .card {
@@ -9,6 +9,16 @@ body {
   background: white;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   transition: transform 0.3s ease;
+  animation: fadeSlide 0.8s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card:hover {
@@ -36,8 +46,8 @@ h1 {
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  border-color: #2980b9;
+  box-shadow: 0 0 0 4px rgba(41, 128, 185, 0.2);
 }
 
 button#submitButton {
@@ -51,6 +61,7 @@ button#submitButton {
 }
 
 button#submitButton:hover {
+  background: #1d6fa5;
   transform: scale(1.02);
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
 }
@@ -60,13 +71,13 @@ button#submitButton:hover {
   border-radius: 0.75rem;
   font-weight: 500;
   font-size: 0.95rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
 }
 
 .spinner-border {
   vertical-align: middle;
 }
 
-/* Estilo opcional para toast (si se usa) */
 .toast {
   position: fixed;
   top: 20px;
