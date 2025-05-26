@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const servicios = {
     '2445': 'Seguidores Instagram',
     '157': 'Likes Instagram',
+<<<<<<< HEAD
     '169': 'Vistas Instagram',
+=======
+>>>>>>> f0c89dbb3cd93455696a95c625e60a6808b0c9dc
     '2500': 'Seguidores TikTok',
     '5120': 'Likes TikTok',
     '2771': 'Vistas TikTok'
@@ -94,7 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     comboSpinner.classList.remove('d-none');
 
     const ordenes = [
+<<<<<<< HEAD
       { id: '2445', link: linkSeg.value.trim(), cantidad: Math.ceil(parseInt(cantSeg.value) * 1.10) },
+=======
+      { id: '3707', link: linkSeg.value.trim(), cantidad: Math.ceil(parseInt(cantSeg.value) * 1.10) },
+>>>>>>> f0c89dbb3cd93455696a95c625e60a6808b0c9dc
       { id: '157', link: linkLike.value.trim(), cantidad: parseInt(cantLike.value) }
     ];
 
