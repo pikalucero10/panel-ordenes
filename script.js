@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const API_KEY = '89fa5c12e497c6031bf995fb4095070e';
 
   const servicios = {
-    '1253': 'Seguidores Instagram',
+    '3707': 'Seguidores Instagram',
     '157': 'Likes Instagram',
     '169': 'Vistas Instagram',
     '2884': 'Seguidores TikTok',
@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const finalQuantity = serviceId === '1253'
-      ? Math.ceil(quantity * 1.10)
+    const finalQuantity = serviceId === '3707'
+      ? Math.ceil(quantity * 1.05)
       : quantity;
 
     submitButton.disabled = true;
