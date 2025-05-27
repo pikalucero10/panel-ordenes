@@ -5,8 +5,8 @@ body {
   background: radial-gradient(circle at top left, #0f172a, #1e293b 70%);
   color: #e0f2fe;
   min-height: 100vh;
+  margin: 0;
   overflow-x: hidden;
-  position: relative;
 }
 
 .card {
@@ -45,6 +45,7 @@ h1 {
 .form-label {
   font-weight: 600;
   color: #94a3b8;
+  font-family: 'Poppins', sans-serif;
 }
 
 .form-control,
@@ -53,16 +54,22 @@ h1 {
   border: 1px solid #3b82f6;
   border-radius: 1rem;
   padding: 0.75rem 1rem;
-  color: #e0f2fe;
+  color: #ffffff;
   transition: all 0.3s ease;
   font-family: 'Poppins', sans-serif;
 }
 
+.form-control::placeholder {
+  color: #94a3b8;
+  opacity: 0.8;
+}
+
 .form-control:focus,
 .form-select:focus {
+  color: #ffffff;
+  background-color: rgba(15,23,42,0.95);
   border-color: #38bdf8;
   box-shadow: 0 0 0 4px rgba(56,189,248,0.2);
-  background-color: rgba(15,23,42,0.95);
 }
 
 button#submitButton {
@@ -73,6 +80,8 @@ button#submitButton {
   font-size: 1.1rem;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  color: white;
 }
 
 button#submitButton:hover {
@@ -82,8 +91,7 @@ button#submitButton:hover {
 }
 
 #responseMessage,
-#orderStatus,
-#comboMessage {
+#orderStatus {
   border-radius: 0.75rem;
   font-weight: 500;
   font-size: 1rem;
@@ -92,10 +100,7 @@ button#submitButton:hover {
   background-color: rgba(30,58,138,0.2);
   color: #e0f2fe;
   padding: 1rem;
-}
-
-.spinner-border {
-  vertical-align: middle;
+  font-family: 'Poppins', sans-serif;
 }
 
 .toast {
