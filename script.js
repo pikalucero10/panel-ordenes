@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const API_KEY = '89fa5c12e497c6031bf995fb4095070e';
 
   const servicios = {
-    '2943': 'Seguidores Instagram',
+    '1001': 'Seguidores Instagram',
     '157': 'Likes Instagram',
     '169': 'Vistas Instagram',
     '2881': 'Seguidores TikTok',
