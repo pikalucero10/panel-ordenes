@@ -26,6 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
     volume: 0.8
   });
 
+  const hoverSound = new Howl({
+    src: ['mpr/hover.mp3'], // agregalo en tu carpeta mpr
+    volume: 0.3
+  });
+
+  submitButton.addEventListener('mouseenter', () => {
+    hoverSound.play();
+  });
+
   orderForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -116,4 +125,50 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => toast.remove(), 1000);
     }, 4000);
   }
+
+  // 🌌 Fondo animado con partículas
+  tsParticles.load("tsparticles", {
+    fullScreen: { enable: true, zIndex: -1 },
+    background: { color: { value: "transparent" } },
+    particles: {
+      number: { value: 60, density: { enable: true, area: 800 } },
+      color: { value: "#38bdf8" },
+      shape: { type: "circle" },
+      opacity: { value: 0.2, random: true },
+      size: { value: { min: 1.5, max: 3.5 } },
+      move: {
+        enable: true,
+        speed: 1.2,
+        direction: "none",
+        random: true,
+        straight: false,
+        outModes: { default: "bounce" }
+      }
+    },
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        onClick: { enable: true, mode: "push" },
+        resize: true
+      },
+      modes: {
+        repulse: { distance: 100, duration: 0.4 },
+        push: { quantity: 4 }
+      }
+    },
+    detectRetina: true
+  });
+
+  // 💡 Efecto de luz que sigue el mouse en la tarjeta
+  const card = document.querySelector('.card');
+  card.addEventListener('mousemove', e => {
+    const { left, top } = card.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(56,189,248,0.15), rgba(3,7,18,0.9))`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.background = 'linear-gradient(135deg, rgba(30,41,59,0.9), rgba(3,7,18,0.9))';
+  });
 });
