@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '3179': 'Seguidores Instagram',
     '157': 'Likes Instagram',
     '169': 'Vistas Instagram',
-    '2881': 'Seguidores TikTok',
+    '5692': 'Seguidores TikTok',
     '5120': 'Likes TikTok',
     '2771': 'Vistas TikTok'
   };
